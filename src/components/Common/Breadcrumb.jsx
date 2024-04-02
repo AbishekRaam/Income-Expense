@@ -7,7 +7,7 @@ const Breadcrumb = (props) => {
   return (
     <Row>
       <Col xs="12">
-        <div className="py-2 bg-secondary rounded mb-4">
+        <div className="page-title-box d-sm-flex align-items-center justify-content-between py-2 bg-secondary rounded mb-4">
           <h4 className="container mb-0 font-size-18 text-white">{props.breadcrumbItem} </h4>
           {/* <div className="page-title-right">
             <ol className="breadcrumb m-0">

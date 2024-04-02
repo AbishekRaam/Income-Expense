@@ -12,10 +12,9 @@ import ForgetPwd from "../pages/Authentication/ForgetPassword";
 
 // // Dashboard
 import Dashboard from "../pages/Dashboard/index";
+import Revenue from "../pages/Revenue/index";
 import Income from "../pages/Income/index";
 import Expenses from "../pages/Expenses/index";
-import AllSummary from "../pages/AllSummary/index";
-import Notes from "../pages/Notes/index";
 import Add from "../pages/Income/add";
 
 const authProtectedRoutes = [
@@ -24,11 +23,9 @@ const authProtectedRoutes = [
   //   // //profile
   { path: "/profile", component: <UserProfile /> },
 
+  { path: "/revenue", component: <Revenue />},
   { path: "/income", component: <Income />},
   { path: "/expense", component: <Expenses />},
-  { path: "/allSummary", component: <AllSummary />},
-  { path: "/note", component: <Notes />},
-
   { path: "/add", component: <Add />},
 
   //   // this route should be at the end of all other routes

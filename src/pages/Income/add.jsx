@@ -34,25 +34,25 @@ const Add = (props) => {
 
       <Row className='d-flex justify-content-center'>
       <Col lg={8} >
-        <Card className='border border-dark'>
+        <Card>
           <CardBody>
             <CardTitle className="mb-4">Insert New Income</CardTitle>
 
             <Form>
               <div className="row mb-4">
                 <Label
-                  htmlFor="horizontal-firstname-Input"
+                  htmlFor="horizontal-password-Input"
                   className="col-sm-3 col-form-label"
                 >
-                  Income Description
+                  Date
                 </Label>
-                <Col sm={9}>
-                  <Input
-                    type="text"
-                    className="form-control"
-                    id="horizontal-firstname-Input"
-                    placeholder="Enter Description"
-                  />
+                <Col sm={12}>
+                <input
+                      className='form-control'
+                      type="date"
+                      name="incomeDate"
+                      required
+                    />
                 </Col>
               </div>
               <div className="row mb-4">
@@ -62,34 +62,37 @@ const Add = (props) => {
                 >
                   Income Amount
                 </Label>
-                <Col sm={9}>
+                <Col sm={12}>
                 <Input
                   type="text"
                   className="form-control"
                   id="basicpill-phoneno-input3"
                   placeholder="Enter Your Amount"
+                  required
                 />
                 </Col>
               </div>
               <div className="row mb-4">
                 <Label
-                  htmlFor="horizontal-password-Input"
+                  htmlFor="horizontal-firstname-Input"
                   className="col-sm-3 col-form-label"
                 >
-                  Date
+                  Income Description
                 </Label>
-                <Col sm={9}>
-                <InputMask
-                  mask="99/99/9999"
-                  value={props.value}
-                  className="form-control input-color"
-                  onChange={props.onChange}
-                >     
-                </InputMask>
+                <Col sm={12}>
+                  <Input
+                    type="text"
+                    className="form-control"
+                    id="horizontal-firstname-Input"
+                    placeholder="Enter Description"
+                    required
+                  />
                 </Col>
               </div>
+              
+              
 
-              <div className="row justify-content-end">
+              <div className="row">
                 <Col sm={9}>
                   <div className=''>
                     <Button
