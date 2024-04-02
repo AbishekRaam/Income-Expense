@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Container,
   Row,
@@ -18,12 +18,10 @@ import { withTranslation } from "react-i18next";
 import Tablecontainer from "./Tablecontainer";
 import Cardcontainer from "./Card.jsx";
 import Pie from './pie.jsx'
-
+import { useStateContext } from "../../Context/ContextProvider.jsx";
 const Dashboard = props => {
-
-  //meta title
-  document.title = "Dashboard | Skote - Vite React Admin & Dashboard Template";
-
+  document.title = "SST-Invoice";
+  const {expense,income} = useStateContext()
   return (
     <React.Fragment>
       <div className="page-content">
@@ -35,15 +33,15 @@ const Dashboard = props => {
           />
         </Container>
         
-        <Tablecontainer />
+        <Tablecontainer exspense={expense} income={income}  revenue={income} />
 
-        <Row>
+        {/* <Row>
           <Col>
             <Cardcontainer />
           </Col>
-        </Row>
+        </Row> */}
 
-        <Card>
+        <Card className="mt-3">
           <CardBody>
             <CardTitle>Pie Chart</CardTitle>
             <div id="pie-chart" className="e-chart">

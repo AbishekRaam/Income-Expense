@@ -11,14 +11,15 @@ import Register from "../pages/Authentication/Register";
 import ForgetPwd from "../pages/Authentication/ForgetPassword";
 
 // // Dashboard
-import Dashboard from "../pages/Dashboard/index";
-import Revenue from "../pages/Revenue/index";
+import Dashboard from "../pages/Dashboard-saas/index";
 import Income from "../pages/Income/index";
+import Revenue from "../pages/Revenue/index";
 import Expenses from "../pages/Expenses/index";
 import Add from "../pages/Income/add";
+import Login2 from "../pages/Authentication/Login2";
 
 const authProtectedRoutes = [
-  { path: "/", component: <Dashboard /> },
+  { path: "/dashboard", component: <Dashboard /> },
 
   //   // //profile
   { path: "/profile", component: <UserProfile /> },
@@ -35,7 +36,7 @@ const authProtectedRoutes = [
 
 const publicRoutes = [
   { path: "/logout", component: <Logout /> },
-  { path: "/login", component: <Login /> },
+  { path: "/login", component: <Login2 /> },
   { path: "/forgot-password", component: <ForgetPwd /> },
   { path: "/register", component: <Register /> },
 ];

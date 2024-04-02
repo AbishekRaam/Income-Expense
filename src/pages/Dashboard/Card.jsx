@@ -9,7 +9,7 @@ const Cardcontainer = () => {
       <Card>
           <CardBody>
               <div className="list-inline mb-0">
-                  <h3>Total Summary</h3>
+                  <h6><b>Total Summary</b></h6>
               </div>
               
               <div className="mt-4 hstack gap-2">

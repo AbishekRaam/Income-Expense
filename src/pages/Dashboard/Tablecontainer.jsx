@@ -1,22 +1,53 @@
 import React from 'react'
-
-const Tablecontainer = () => {
+import {
+  Badge,
+  Table,
+} from "reactstrap"
+const Tablecontainer = ({exspense,income,revenue}) => {
   return (
-    <div className='container-sm w-75  border border-secondary mb-5'>
-      <div className="p-3 text-center border-bottom border-secondary h4">All Data</div>
-      <div className="d-flex justify-content-between p-3 border-bottom border-secondary">
-        <span className='pt-1 h6'>Total Income</span>
-        <span className='bg-primary p-1 text-white rounded'>2234.00</span>
-      </div>
-      <div className="d-flex justify-content-between p-3 border-bottom border-secondary">
-        <span className='pt-1 h6'>Total Expenses</span>
-        <span className='bg-danger p-1 text-white rounded'>500.00</span>
-      </div>
-      <div className="d-flex justify-content-between p-3 ">
-        <span className='pt-1 h6'>Balance</span>
-        <span className='bg-primary p-1 text-white rounded'>1500</span>
-      </div>
-    </div>
+    <Table className="table mb-0">
+    <thead className="table-light">
+      <tr>
+        <th>#</th>
+        <th>Income</th>
+        <th>Expense</th>
+        <th>Revenue</th>
+      </tr>
+    </thead>
+    <tbody>
+       <tr>
+        <th scope="row">1</th>
+        <td>
+          <Badge color='success' className='ps-3 pe-3 pt-2 pb-2'>
+          {income.length}
+          </Badge>
+          </td>
+        <td>
+          <Badge color='danger' className='ps-3 pe-3 pt-2 pb-2'>
+          {exspense.length}
+          </Badge>
+          </td>
+        
+        <td>
+        <Badge color='warning' className='ps-3 pe-3 pt-2 pb-2'>
+          {revenue.length}
+          </Badge>
+          </td>
+      </tr>
+     {/* <tr>
+        <th scope="row">2</th>
+        <td>Jacob</td>
+        <td>Thornton</td>
+        <td>@fat</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>Larry</td>
+        <td>the Bird</td>
+        <td>@twitter</td>
+      </tr> */}
+    </tbody>
+  </Table>
   )
 }
 

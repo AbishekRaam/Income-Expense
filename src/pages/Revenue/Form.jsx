@@ -142,6 +142,26 @@ const FormRevenue = (props) => {
                 <div className="mb-4">
                   <Label
                     htmlFor="horizontal-firstname-Input"
+                    className="col-sm-3 col-form-label"
+                  >
+                    Client
+                  </Label>
+                  <Col sm={12}>
+                    <Input
+                      name='clientName'
+                      type="text"
+                      className="form-control"
+                      id="horizontal-firstname-Input"
+                      placeholder="Enter Client"
+                      value={formData.clientName}
+                      onChange={handleChange}
+                      required
+                    />
+                  </Col>
+                </div>
+                <div className="mb-4">
+                  <Label
+                    htmlFor="horizontal-firstname-Input"
                     className="col-sm-5 col-form-label"
                   >
                     Revenue Description
@@ -157,26 +177,7 @@ const FormRevenue = (props) => {
                   ></textarea>
                   </Col>
                 </div>
-                <div className="mb-4">
-                <Label
-                  htmlFor="horizontal-firstname-Input"
-                  className="col-sm-3 col-form-label"
-                >
-                  Client
-                </Label>
-                <Col sm={12}>
-                  <Input
-                    name='clientName'
-                    type="text"
-                    className="form-control"
-                    id="horizontal-firstname-Input"
-                    placeholder="Enter Client"
-                    value={formData.clientName}
-                    onChange={handleChange}
-                    required
-                  />
-                </Col>
-              </div>
+                
               <div className="justify-content-end">
                 <Col sm={12}>
                   <div className=''>
