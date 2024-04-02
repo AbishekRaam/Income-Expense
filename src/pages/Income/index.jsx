@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {
   Container,
@@ -12,16 +12,18 @@ import {
 import Breadcrumbs from "../../components/Common/Breadcrumb";
 
 import { withTranslation } from "react-i18next";
-
-import Tablecontainer from "./Tablecontainer";
+import { db } from "../../firebase-config";
+import AddIncome from "./Tablecontainer";
 import CardData from "./cardData";
-
+import { collection, getDocs } from "firebase/firestore";
+import { useStateContext } from "../../Context/ContextProvider";
+import TableContainer from "../Table/TableContainer";
+import Table from "../Table/TableContainer";
 
 const Income = (props) => {
 
-  //meta title
-  document.title = "Income | Skote - Vite React Admin & Dashboard Template";
-
+  document.title = "SST-Invoice";
+const {income} = useStateContext()
   return (
       <React.Fragment>
         <div className="page-content">
@@ -32,11 +34,15 @@ const Income = (props) => {
               breadcrumbItem={props.t("Income")}
             />
           </Container>
-
-          <Tablecontainer />
-
-          <CardData />
-
+          <AddIncome />
+          {/* <Row>
+          {
+            income.map((data)=>(
+              <CardData date={data.date} description={data.description} amount={data.income} />
+            ))
+          }
+          </Row> */}
+          <Table data={income} />
         </div>
       </React.Fragment>
   )

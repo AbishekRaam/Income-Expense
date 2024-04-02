@@ -2,8 +2,9 @@ import React from "react";
 import ReactEcharts from "echarts-for-react";
 import getChartColorsArray from "../../components/Common/ChartsDynamicColor";
 
-
+import { useStateContext } from "../../Context/ContextProvider";
 const Pie = ({ dataColors }) => {
+const {income,expense} = useStateContext()
   const PieEChartColors = getChartColorsArray(dataColors);
   const options = {
     toolbox: {
@@ -29,9 +30,9 @@ const Pie = ({ dataColors }) => {
         radius: "75%",
         center: ["50%", "60%"],
         data: [
-          { value: 1035, name: "Income" },
-          { value: 310, name: "Expenses" },
-          { value: 234, name: "Notes" },
+          { value: income.length, name: "Income" },
+          { value: expense.length, name: "Expenses" },
+          { value: income.length, name: "Revenue" },
         ],
         itemStyle: {
           emphasis: {
