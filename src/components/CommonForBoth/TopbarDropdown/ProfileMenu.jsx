@@ -14,15 +14,16 @@ import { withTranslation } from "react-i18next";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import withRouter from "../../Common/withRouter";
-
+import { useStateContext } from "../../../Context/ContextProvider";
 // users
 import user1 from "../../../assets/images/users/avatar-1.jpg";
+import Cookies from "js-cookie";
 
 const ProfileMenu = (props) => {
   // Declare a new state variable, which we'll call "menu"
   const [menu, setMenu] = useState(false);
-
-  const [username, setusername] = useState("Admin");
+  const {url} = useStateContext()
+  const [username, setusername] = useState(Cookies.get('name'));
 
   useEffect(() => {
     if (localStorage.getItem("authUser")) {
@@ -50,12 +51,13 @@ const ProfileMenu = (props) => {
           className="btn header-item "
           id="page-header-user-dropdown"
           tag="button"
-        >
-          <img
+        >{
+          url ? (<img
             className="rounded-circle header-profile-user"
-            src={user1}
+            src={url}
             alt="Header Avatar"
-          />
+          />):(<><div className='d-flex justify-content-center align-items-center bg-primary text-light rounded-circle header-profile-user' >{Cookies.get('name').split('')[0]}</div></>)
+        }
           <span className="d-none d-xl-inline-block ms-2 me-1">{username}</span>
           <i className="mdi mdi-chevron-down d-none d-xl-inline-block" />
         </DropdownToggle>
@@ -65,19 +67,6 @@ const ProfileMenu = (props) => {
             <i className="bx bx-user font-size-16 align-middle me-1" />
             {props.t("Profile")}{" "}
           </DropdownItem>
-          <DropdownItem tag="a" href="/crypto-wallet">
-            <i className="bx bx-wallet font-size-16 align-middle me-1" />
-            {props.t("My Wallet")}
-          </DropdownItem>
-          <DropdownItem tag="a" href="#">
-            <span className="badge bg-success float-end">11</span>
-            <i className="bx bx-wrench font-size-16 align-middle me-1" />
-            {props.t("Settings")}
-          </DropdownItem>
-          {/* <DropdownItem tag="a" href="auth-lock-screen">
-            <i className="bx bx-lock-open font-size-16 align-middle me-1" />
-            {props.t("Lock screen")}
-          </DropdownItem> */}
           <div className="dropdown-divider" />
           <Link to="/logout" className="dropdown-item">
             <i className="bx bx-power-off font-size-16 align-middle me-1 text-danger" />

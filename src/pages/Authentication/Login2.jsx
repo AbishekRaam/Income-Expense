@@ -9,7 +9,7 @@ import { createSelector } from "reselect";
 
 // Formik validation
 import * as Yup from "yup";
-import { useFormik } from "formik";
+import { Field, Formik, useFormik } from "formik";
 
 import {
   Row,
@@ -30,66 +30,65 @@ import { loginUser, socialLogin } from "../../store/actions";
 // import images
 import profile from "../../assets/images/profile-img.png";
 import logo from "../../assets/images/logo.svg";
-
-const Login = (props) => {
-  //meta title
-  document.title = "SST-Income";
-  const nav = useNavigate()
-  const[error,seterror] = useState('');
-  // const validation = useFormik({
-  //   // enableReinitialize : use this flag when initial values needs to be changed
-  //   enableReinitialize: true,
-
-  //   initialValues: {
-  //     email: "admin@themesbrand.com" || "",
-  //     password: "123456" || "",
-  //   },
-  //   validationSchema: Yup.object({
-  //     email: Yup.string().required("Please Enter Your Email"),
-  //     password: Yup.string().required("Please Enter Your Password"),
-  //   }),
-  //   onSubmit: (values) => {
-  //     nav('/dashboard')
-  //   },
-  // });
-
-
-const handleSubmit=()=>{
-    sessionStorage.setItem('userLogin',true)
-  nav('/dashboard')
+import {auth} from "../../firebase-config"
+import {signInWithEmailAndPassword,sendPasswordResetEmail} from 'firebase/auth'
+const initialValues = {
+  email:"",
+  password:""
 }
+const Login2 = () => {
+  const signupValidation = Yup.object({
+    email: Yup.string().min(3).email("Please Enter Valid Email").required("Please Enter Your username"),
+    password: Yup.string().min(3).required("Please Enter Your Password"),
+  })
+
+  const nav = useNavigate();
+
+  const [show, setShow] = useState(false);
+  const[error,seterror] = useState('');
+// const error = error;
+  // Form validation 
+ const {values,handleBlur,handleChange,handleSubmit,errors}= useFormik({
+    initialValues: initialValues,
+    validationSchema: signupValidation,
+    onSubmit:(values) =>{
+        signInWithEmailAndPassword(auth,values.email, values.password)
+        .then(function (userCredential) {
+          // Login successful, access the user object
+          var user = userCredential.user;
+          sessionStorage.setItem("uid",JSON.stringify(user.uid));
+          nav('/dashboard');
+        })
+        .catch((error) => {
+          // Handle errors
+          error.code === "auth/invalid-credential" ? (
+            seterror(" wrong password or invalid email")) : (seterror("Invalid password."))
+        }) 
+      
+    }  
+  });
+
     
 
-  
-
- 
   return (
-    <React.Fragment>
-      <div className="home-btn d-none d-sm-block">
-        <Link to="/" className="text-dark">
-          <i className="bx bx-home h2" />
-        </Link>
-      </div>
+    <React.Fragment>      
       <div className="account-pages my-5 pt-sm-5">
         <Container>
           <Row className="justify-content-center">
             <Col md={8} lg={6} xl={5}>
               <Card className="overflow-hidden">
-                <div className="bg-primary-subtle">
+              <div className="bg-primary-subtle">
                   <Row>
-                    <Col xs={7}>
+                    <Col className="col-7">
                       <div className="text-primary p-4">
                         <h5 className="text-primary">Welcome Back !</h5>
-                        <p>Sign in to continue to Skote.</p>
+                        <p>Sign in to continue</p>
                       </div>
-                    </Col>
-                    <Col className="col-5 align-self-end">
-                      <img src={profile} alt="" className="img-fluid" />
                     </Col>
                   </Row>
                 </div>
                 <CardBody className="pt-0">
-                  <div>
+                  <div className="auth-logo">
                     <Link to="/" className="auth-logo-light">
                       <div className="avatar-md profile-user-wid mb-4">
                         <span className="avatar-title rounded-circle bg-light">
@@ -102,43 +101,65 @@ const handleSubmit=()=>{
                         </span>
                       </div>
                     </Link>
+                    <Link to="/" className="auth-logo-dark">
+                      <div className="avatar-md profile-user-wid mb-4">
+                        <span className="avatar-title rounded-circle bg-light">
+                          <img
+                            src={logo}
+                            alt=""
+                            className=""
+                            height="34"
+                          />
+                        </span>
+                      </div>
+                    </Link>
                   </div>
                   <div className="p-2">
-                    <Form
-                      className="form-horizontal"
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                       
-                      }}
+                    <Formik
+              
                     >
+                    <Form className="form-horizontal"
+                    onSubmit={
                       
-
+                      handleSubmit
+                      
+                      }>
                       <div className="mb-3">
                         <Label className="form-label">Email</Label>
-                        <Input
+                        <Field
                           name="email"
-                          className="form-control"
-                          placeholder="Enter email"
+                          className = {errors.email ? "  border-danger form-control" : "form-control"}
+                          placeholder="Enter E-mail"
                           type="email"
-                          // onChange={validation.handleChange}
-                          // onBlur={validation.handleBlur}
-                          // value={validation.values.email || ""}
-                        
-                        />
-                      
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.email}
+                        />              
+                        {errors.email && <small className="text-danger m-0">{errors.email}</small>}
                       </div>
 
                       <div className="mb-3">
                         <Label className="form-label">Password</Label>
-                        <Input
-                          name="password"
-                          autoComplete="off"
-                          // value={validation.values.password || ""}
-                          type="password"
-                          placeholder="Enter Password"
-                          
-                        />
-                      
+                        <div className="input-group auth-pass-inputgroup d-flex ">
+                          <Field
+                          // className="form-control"
+                          className= {errors.password ? "  border-danger form-control" : "form-control"}
+                            name="password"
+                            type={show ? "text" : "password"}
+                            placeholder="Enter Password"
+                            onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.password}
+                            // invalid={
+                            //   validation.touched.password && validation.errors.password ? true : false
+                            // }
+                          />
+                           
+                          <button onClick={() => setShow(!show)} className="btn btn-light" type="button" id="password-addon">
+                            <i className="mdi mdi-eye-outline"></i></button>
+                            
+                        </div>
+                        {errors.password && <small className="text-danger m-0">{errors.password}</small>}
                       </div>
 
                       <div className="form-check">
@@ -157,26 +178,26 @@ const handleSubmit=()=>{
 
                       <div className="mt-3 d-grid">
                         <button
-                          className="btn btn-primary btn-block"
+                          className="btn btn-primary btn-block "
                           type="submit"
-                          onClick={handleSubmit}
+                          // onClick={()=>handleSubmit()}
                         >
                           Log In
                         </button>
                       </div>
-
-                     
-
+                      <div className="text-danger mx-auto pt-2 d-flex justify-content-center">{error}</div>
                       <div className="mt-4 text-center">
                         <Link to="/forgot-password" className="text-muted">
-                          <i className="mdi mdi-lock me-1" />
-                          Forgot your password?
+                          <i className="mdi mdi-lock me-1" /> Forgot your
+                          password?
                         </Link>
                       </div>
                     </Form>
+                    </Formik>
                   </div>
                 </CardBody>
               </Card>
+ 
             </Col>
           </Row>
         </Container>
@@ -185,8 +206,5 @@ const handleSubmit=()=>{
   );
 };
 
-export default withRouter(Login);
+export default Login2;
 
-Login.propTypes = {
-  history: PropTypes.object,
-};

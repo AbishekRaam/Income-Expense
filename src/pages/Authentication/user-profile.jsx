@@ -29,12 +29,17 @@ import Breadcrumb from "../../components/Common/Breadcrumb";
 import avatar from "../../assets/images/users/avatar-1.jpg";
 // actions
 import { editProfile, resetProfileFlag } from "../../store/actions";
+import { useStateContext } from "../../Context/ContextProvider";
+import NoProfile from "./NoProfile";
+import Cookies from "js-cookie";
+import ProfileLayout from "./ProfileLayout";
 
 const UserProfile = (props) => {
 
   //meta title
   document.title = "Profile | Skote - React Admin & Dashboard Template";
 
+  const {url} = useStateContext()
   const dispatch = useDispatch();
 
   const [email, setemail] = useState("");
@@ -96,9 +101,6 @@ const UserProfile = (props) => {
     <React.Fragment>
       <div className="page-content">
         <Container fluid>
-          {/* Render Breadcrumb */}
-          <Breadcrumb title="Skote" breadcrumbItem="Profile" />
-
           <Row>
             <Col lg="12">
               {error && error ? <Alert color="danger">{error}</Alert> : null}
@@ -108,17 +110,13 @@ const UserProfile = (props) => {
                 <CardBody>
                   <div className="d-flex">
                     <div className="ms-3">
-                      <img
-                        src={avatar}
-                        alt=""
-                        className="avatar-md rounded-circle img-thumbnail"
-                      />
+                    {url?(<img className="rounded-circle " src={url}  height={100} width={100} />):(<NoProfile name={Cookies.get('name')} />)}
                     </div>
-                    <div className="flex-grow-1 align-self-center">
+                    <div className="ms-3 flex-grow-1 align-self-center">
                       <div className="text-muted">
-                        <h5>{name}</h5>
-                        <p className="mb-1">{email}</p>
-                        <p className="mb-0">Id no: #{idx}</p>
+                        <h5 className="text-dark"><b>{Cookies.get('name')}</b></h5>
+                        <p className="mb-1">{Cookies.get('team')}</p>
+                        <p className="mb-0">{Cookies.get('level')}</p>
                       </div>
                     </div>
                   </div>
@@ -126,16 +124,19 @@ const UserProfile = (props) => {
               </Card>
             </Col>
           </Row>
-
+          <Row>
+          <Col sm="7">
+          <ProfileLayout/>
+          </Col>
+          <Col sm="5">
           <h4 className="card-title mb-4">Change User Name</h4>
-
           <Card>
             <CardBody>
               <Form
                 className="form-horizontal"
                 onSubmit={(e) => {
                   e.preventDefault();
-                  validation.handleSubmit();
+                  // validation.handleSubmit();
                   return false;
                 }}
               >
@@ -160,13 +161,15 @@ const UserProfile = (props) => {
                   <Input name="idx" value={idx} type="hidden" />
                 </div>
                 <div className="text-center mt-4">
-                  <Button type="submit" color="danger">
+                  <Button type="submit" color="primary">
                     Update User Name
                   </Button>
                 </div>
               </Form>
             </CardBody>
           </Card>
+          </Col>
+          </Row>
         </Container>
       </div>
     </React.Fragment>

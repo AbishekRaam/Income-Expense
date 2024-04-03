@@ -15,7 +15,7 @@ import {
 
 import { collection, addDoc, onSnapshot, Timestamp } from "firebase/firestore"; 
 import 'firebase/database';
-import {db} from "../../firebase.js"
+import {db} from "../../firebase-config.js"
 
 //Import Flatepicker
 import "flatpickr/dist/themes/material_blue.css";

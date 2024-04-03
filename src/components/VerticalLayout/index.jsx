@@ -37,7 +37,7 @@ const Layout = (props) => {
       layoutWidth: layout.layoutWidth,
       topbarTheme: layout.topbarTheme,
       showRightSidebar: layout.showRightSidebar,
-      leftSideBarTheme: layout.leftSideBarTheme,
+      leftSideBarTheme: 'light',
     }));
 
   const {
