@@ -13,7 +13,7 @@ import {
   InputGroup,
 } from "reactstrap";
 
-import { collection, addDoc, onSnapshot } from "firebase/firestore"; 
+import { collection, addDoc, onSnapshot, Timestamp } from "firebase/firestore"; 
 import 'firebase/database';
 import {db} from "../../firebase.js"
 
@@ -37,7 +37,7 @@ const FormRevenue = (props) => {
 
   const handleChange = (e)=>{
     const {name, value} = e.target;
-    setFormData({...formData, [name]: value});
+    setFormData({...formData, [name]: value,timestamp:Timestamp.now()});
   }
 
   const handleSubmit = async(e)=>{

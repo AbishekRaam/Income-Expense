@@ -11,6 +11,7 @@ import MiniWidget from "./mini-widget";
 import Earning from "./earning";
 import SalesAnalytics from "./sales-analytics";
 import TotalSellingProduct from "./total-selling-product";
+import IncomeChart from "./IncomeChart";
 // import Tasks from "./tasks";
 // import ChatBox from "./chat-box";
 
@@ -70,7 +71,7 @@ const DashboardSaas = (props) => {
 
           <Row>
             {/* earning */}
-            <Earning dataColors='["--bs-primary"]' />
+            <IncomeChart />
 
             {/* sales anytics */}
             <SalesAnalytics dataColors='["--bs-primary", "--bs-success", "--bs-danger"]' />

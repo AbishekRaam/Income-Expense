@@ -29,7 +29,7 @@ const Earning = ({ dataColors }) => {
   // } = useSelector(DashboardsaasProperties);
 
   
-const earningChartData = [78,56,98,35,87,90,49,97]
+const earningChartData = [78,56,98,35,87,56,90,49,97,90]
   const options = {
     chart: {
       toolbar: "false",
@@ -58,19 +58,11 @@ const earningChartData = [78,56,98,35,87,90,49,97]
       data: [...earningChartData],
     },
   ];
-
-  /*
-  call api action to receive data
-  */
-  // useEffect(() => {
-  //   dispatch(getEarningChartsData("jan"));
-  // }, [dispatch]);
-
-  // const [seletedMonth, setSeletedMonth] = useState("jan");
-  // const onChangeMonth = (value) => {
-  //   // setSeletedMonth(value);
-  //   // dispatch(getEarningChartsData(value));
-  // };
+  const [seletedMonth, setSeletedMonth] = useState("jan");
+  const onChangeMonth = (value) => {
+    setSeletedMonth(value);
+    // dispatch(getEarningChartsData(value));
+  };
 
   return (
     <React.Fragment>
@@ -78,26 +70,7 @@ const earningChartData = [78,56,98,35,87,90,49,97]
         <Card>
           <CardBody>
             <div className="clearfix">
-              <div className="float-end">
-                <div className="input-group input-group-sm">
-                  {/* <select
-                    className="form-select form-select-sm"
-                    value={seletedMonth}
-                    onChange={(e) => {
-                      onChangeMonth(e.target.value);
-                    }}
-                  >
-                    <option value="jan">Jan</option>
-                    <option value="dec">Dec</option>
-                    <option value="nov">Nov</option>
-                    <option value="oct">Oct</option>
-                  </select> */}
-                  {/* <div className="input-group-append"> */}
-                  <label className="input-group-text">Month</label>
-                  {/* </div> */}
-                </div>
-              </div>
-              <h4 className="card-title mb-4">Earning</h4>
+              <h4 className="card-title mb-4">Income</h4>
             </div>
 
             <Row>

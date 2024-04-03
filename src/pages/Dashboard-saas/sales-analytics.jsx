@@ -2,12 +2,18 @@ import React from "react";
 import { Row, Col, Card, CardBody } from "reactstrap";
 import ReactApexChart from "react-apexcharts";
 import getChartColorsArray from "../../components/Common/ChartsDynamicColor";
+import { useStateContext } from "../../Context/ContextProvider";
+import { getRevenue, getTotalAmount } from "../../utils/getTotalAmount";
 
 const SalesAnalytics = ({ dataColors }) => {
+  const {income,expense} = useStateContext()
   const apexsaleschartColors = getChartColorsArray(dataColors);
-  const series = [56, 38, 26];
+  const incomeAmount = getTotalAmount(income,'income')
+  const expenseAmount = getTotalAmount(expense,'amount')
+  const revenueAmount = getRevenue(income)
+  const series = [incomeAmount, revenueAmount, expenseAmount];
   const options = {
-    labels: ["Series A", "Series B", "Series C"],
+    labels: ["Income", "Revenue", "Expenses"],
     colors: apexsaleschartColors,
     legend: { show: !1 },
     plotOptions: {
@@ -21,11 +27,10 @@ const SalesAnalytics = ({ dataColors }) => {
 
   return (
     <React.Fragment>
-      <Col xl="4">
+      <Col xl="6">
         <Card>
           <CardBody>
-            <h4 className="card-title mb-4">Sales Analytics</h4>
-
+            <h4 className="card-title mb-4">Total Analytics</h4>
             <div>
               <div id="donut-chart">
                 <ReactApexChart
@@ -37,34 +42,33 @@ const SalesAnalytics = ({ dataColors }) => {
                 />
               </div>
             </div>
-
             <div className="text-center text-muted">
               <Row>
                 <Col xs="4">
                   <div className="mt-4">
                     <p className="mb-2 text-truncate">
-                      <i className="mdi mdi-circle text-primary me-1" /> Product
-                      A
+                      <i className="mdi mdi-circle text-primary me-1" /> Income
+                      
                     </p>
-                    <h5>$ 2,132</h5>
+                    <h5>$ {incomeAmount.toLocaleString()}</h5>
                   </div>
                 </Col>
                 <Col xs="4">
                   <div className="mt-4">
                     <p className="mb-2 text-truncate">
-                      <i className="mdi mdi-circle text-success me-1" /> Product
-                      B
+                      <i className="mdi mdi-circle text-success me-1" /> Revenue
+                      
                     </p>
-                    <h5>$ 1,763</h5>
+                    <h5>$ {revenueAmount.toLocaleString()}</h5>
                   </div>
                 </Col>
                 <Col xs="4">
                   <div className="mt-4">
                     <p className="mb-2 text-truncate">
-                      <i className="mdi mdi-circle text-danger me-1" /> Product
+                      <i className="mdi mdi-circle text-danger me-1" /> Expenses
                       C
                     </p>
-                    <h5>$ 973</h5>
+                    <h5>$ {expenseAmount.toLocaleString()}</h5>
                   </div>
                 </Col>
               </Row>

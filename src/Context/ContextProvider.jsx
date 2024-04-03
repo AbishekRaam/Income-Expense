@@ -6,6 +6,7 @@ export const ContextProvider=({children})=>{
   //States
 const [income,setIncome] = useState([])
 const [expense,setExpense] = useState([])
+
 //UseEffects
 useEffect(()=>{
     const getData=async()=>{
