@@ -32,9 +32,9 @@ const Actions = ({cell, request}) => {
             >
                 <i className="mdi mdi-dots-horizontal"></i>
             </DropdownToggle>
-            <DropdownMenu className="dropdown-menu-end">
+            {/* <DropdownMenu className="dropdown-menu-end">
             
-            </DropdownMenu>
+            </DropdownMenu> */}
         </UncontrolledDropdown>
 
     )
