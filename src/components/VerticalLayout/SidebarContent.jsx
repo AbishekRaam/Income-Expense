@@ -143,25 +143,25 @@ const SidebarContent = (props) => {
     <React.Fragment>
       <SimpleBar className="h-100" ref={ref}>
         <div id="sidebar-menu">
-          <ul className="metismenu list-unstyled" id="side-menu">
-
+        <ul className="metismenu list-unstyled" id="side-menu">
+            <li className="menu-title">{props.t("Menu")} </li>
             <li>
-              <Link to="/" className=" " >
+              <Link to="/dashboard" className="">
                 <i className="bx bx-home-circle"></i>
-                <span>{props.t("Dashboard")}</span>
+                <span>{("Dashboard")}</span>
               </Link>
             </li>
-
+            <li className="menu-title">Apps</li>
             <li>
               <Link to="/income" className=" ">
-                <i className="bx bx-dollar"></i>
+                <i className="mdi mdi-cash-multiple"></i>
                 <span>{props.t("Income")}</span>
               </Link>
             </li>
 
             <li>
               <Link to="/revenue" className=" ">
-                <i className="bx bx-dollar"></i>
+                <i className="bx bx-dollar-circle"></i>
                 <span>{props.t("Revenue")}</span>
               </Link>
             </li>            
@@ -170,6 +170,12 @@ const SidebarContent = (props) => {
               <Link to="/expense" className="">
                 <i className="bx bx-money"></i>
                 <span>{props.t("Expenses")}</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/profile" className="">
+                <i className="bx bx-user"></i>
+                <span>{props.t("Profile")}</span>
               </Link>
             </li>
           </ul>

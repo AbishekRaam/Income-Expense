@@ -2,7 +2,7 @@ import React from "react";
 import { Navigate } from "react-router-dom";
 
 const Authmiddleware = (props) => {
-  if (!sessionStorage.getItem('userLogin')) {
+  if (!sessionStorage.getItem('uid')) {
     return (
       <Navigate to={{ pathname: "/login", state: { from: props.location } }} />
     );

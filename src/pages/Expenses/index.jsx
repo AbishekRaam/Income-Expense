@@ -20,6 +20,14 @@ const Expenses = (props) => {
   return (
     <React.Fragment>
         <div className="page-content">
+        <Container fluid>
+          {/* Render Breadcrumb */}
+          <Breadcrumbs
+            title={props.t("Expeses")}
+            breadcrumbItem={props.t("Expenses")}
+          />
+        </Container>
+
           <Container fluid>
             <Layout />
           </Container>

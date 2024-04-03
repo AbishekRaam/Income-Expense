@@ -18,7 +18,7 @@ import "react-datepicker/dist/react-datepicker.css";
 //Import Flatepicker
 import "flatpickr/dist/themes/material_blue.css";
 import { db } from "../../firebase-config";
-import { addDoc, collection } from "firebase/firestore";
+import { Timestamp, addDoc, collection } from "firebase/firestore";
 import { Alert } from 'reactstrap'
 const Layout = () => {
   const [alert, setAlert] = useState('d-none')
@@ -28,7 +28,7 @@ const Layout = () => {
   const [client, setClient] = useState('')
   const [description, setDescription] = useState('')
   const handleSubmit = async () => {
-    await addDoc(collection(db, 'Expense'), { expense, date, amount, client, description }).then(() => {
+    await addDoc(collection(db, 'Expense'), { expense, date, amount, client, description,timestamp:Timestamp.now() }).then(() => {
       setAlert('d-block')
       setTimeout(() => setAlert('d-none'), 10000)
     }).catch(err => console.log(err))

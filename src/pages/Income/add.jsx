@@ -13,7 +13,7 @@ import {
   Input,
   Alert,
 } from "reactstrap";
-import { addDoc, collection } from 'firebase/firestore';
+import { Timestamp, addDoc, collection } from 'firebase/firestore';
 import { db } from '../../firebase-config';
 import { withTranslation } from "react-i18next";
 import { useNavigate } from 'react-router-dom';
@@ -25,7 +25,7 @@ const Add = (props) => {
   const [incomeType,setIncomeType] = useState('')
   const [date,setDate] = useState('')
   const handleSubmit=()=>{
-    const data ={income:incomeAmount,description:description,date:date,type:incomeType}
+    const data ={income:incomeAmount,description:description,date:date,type:incomeType,timestamp:Timestamp.now()}
      addDoc(collection(db,'Income'),data).then(()=>{
       setAlert('d-block')
       setTimeout(()=>setAlert('d-none'),10000)
