@@ -1,7 +1,7 @@
 export const getTotalAmount =(data)=>{
   let total=0;
   data.map( data=>{
-    total=total+parseFloat(data.income)
+    total=total+parseFloat(data.amount)
   })
   return total.toLocaleString('en-IN');
 }

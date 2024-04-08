@@ -35,9 +35,7 @@ const Revenue = ({dataColors}) => {
     xaxis: {
       type: "month",
       categories: [
-        "Jan",
-        "Feb",
-        "Mar",
+        
       ],
     },
     grid: {

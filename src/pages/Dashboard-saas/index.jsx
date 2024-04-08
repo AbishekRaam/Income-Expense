@@ -21,6 +21,7 @@ import IncomeChart from "./IncomeChart";
 const DashboardSaas = (props) => {
 
   const {income, expense} = useStateContext();
+  console.log(income)
 
   const reports = [
     {
@@ -34,7 +35,7 @@ const DashboardSaas = (props) => {
     {
       icon: "bx bx-archive-in",
       title: "Revenue",
-      value: `$ ${getToatalRevenue(income)}`,
+      value: `$ `,
       badgeValue: "+ 0.2%",
       color: "success",
       desc: "From previous period",
@@ -58,7 +59,7 @@ const DashboardSaas = (props) => {
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumb */}
-          <Breadcrumbs title="Dashboard" breadcrumbItem="Income" />
+          <Breadcrumbs title="Dashboard" breadcrumbItem="Dashboard" />
 
           {/* Card User */}
           {/* <CardUser /> */}

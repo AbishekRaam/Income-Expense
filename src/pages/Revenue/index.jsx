@@ -18,8 +18,8 @@ const Revenue = (props) => {
         <Container fluid>
           {/* Render Breadcrumb */}
           <Breadcrumbs
-            title={props.t("Revenue")}
-            breadcrumbItem={props.t("Revenue")}
+            title={props.t("Income")}
+            breadcrumbItem={props.t("Income")}
           />
         </Container>
 

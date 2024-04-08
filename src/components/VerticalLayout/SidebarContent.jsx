@@ -152,17 +152,17 @@ const SidebarContent = (props) => {
               </Link>
             </li>
             <li className="menu-title">Apps</li>
-            <li>
+            {/* <li>
               <Link to="/income" className=" ">
                 <i className="mdi mdi-cash-multiple"></i>
                 <span>{props.t("Income")}</span>
               </Link>
-            </li>
+            </li> */}
 
             <li>
               <Link to="/revenue" className=" ">
                 <i className="bx bx-dollar-circle"></i>
-                <span>{props.t("Revenue")}</span>
+                <span>{props.t("Income")}</span>
               </Link>
             </li>            
 

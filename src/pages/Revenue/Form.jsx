@@ -26,10 +26,10 @@ import InputMask from "react-input-mask"
 const FormRevenue = (props) => {
 
   const[formData, setFormData] = useState({
-    revenueDate: "",
-    revenueAmount: "",
-    revenueType: "option 1",
-    revenueDescription: "",
+    date: "",
+    amount: "",
+    type: "",
+    description: "",
     clientName: "",
   });
   
@@ -44,20 +44,19 @@ const FormRevenue = (props) => {
     e.preventDefault(); 
 
     try {
-      const docRef = await addDoc(collection(db, "Revenue"), {
-        formData: formData,    
-      });
-      console.log("Document written with ID: ", docRef.id);
+      const docRef = await addDoc(collection(db, "Income"),formData);
+      // console.log("Document written with ID: ", docRef.id);
       setFormData({
-        revenueDate: "",
-        revenueAmount: "",
-        revenueType: "option 1",
-        revenueDescription: "",
+        date: "",
+        amount: "",
+        type: "",
+        description: "",
         clientName: "",
       })
     } catch (e) {
       console.error("Error adding document: ", e);
     }
+    console.log(formData)
   }
 
   return (
@@ -67,14 +66,14 @@ const FormRevenue = (props) => {
             <Alert isOpen={show} toggle={() => {
               setShow(false)
             }}>
-              Your Revenue Details Added
+              Your Income Details Added
             </Alert>
           </div>
         </Col>  
         <Col lg={8} >
           <Card>
             <CardBody>
-              <CardTitle className="mb-4">Revenue Form</CardTitle>
+              <CardTitle className="mb-4">Income Form</CardTitle>
 
               <Form onSubmit={handleSubmit}>
                 <div className=" mb-4">
@@ -89,8 +88,8 @@ const FormRevenue = (props) => {
                     <input
                       className='form-control'
                       type="date"
-                      name="revenueDate"
-                      value={formData.revenueDate}
+                      name="date"
+                      value={formData.date}
                       onChange={handleChange}
                       required
                     />
@@ -107,39 +106,20 @@ const FormRevenue = (props) => {
                   <Col sm={12}>
                     <select
                       className="select2-selection form-control"
-                      name="revenueType"
-                      value={formData.revenueType}
+                      name="type"
+                      value={formData.type}
                       onChange={handleChange}
                       required
                     >
-                      <option value="Option 1">Option 1</option>
-                      <option value="Option 2">Option 2</option>
-                      <option value="Option 3">Option 3</option>
+                      <option>Select Income Category</option>
+                      <option value="Revenue">Revenue</option>
+                      <option value="Debt or Loan">Debt / Loan</option>
                     </select>
                   </Col>
                 </div>
                 
-                <div className="mb-4">
-                  <Label
-                    htmlFor="horizontal-email-Input"
-                    className="col-sm-5 col-form-label"
-                  >
-                    Revenue Amount
-                  </Label>
-                  <Col sm={12}>
-                  <Input
-                    name='revenueAmount'
-                    type="text"
-                    className="form-control"
-                    id="horizontal-firstname-Input"
-                    placeholder="Enter Income Amount"
-                    value={formData.revenueAmount}
-                    onChange={handleChange}
-                    required
-                  />
-                  </Col>
-                </div>
-                <div className="mb-4">
+                {formData.type === 'Revenue' && (
+                  <div className="mb-4">
                   <Label
                     htmlFor="horizontal-firstname-Input"
                     className="col-sm-3 col-form-label"
@@ -159,20 +139,45 @@ const FormRevenue = (props) => {
                     />
                   </Col>
                 </div>
+                )}
+
+                
+                
+                <div className="mb-4">
+                  <Label
+                    htmlFor="horizontal-email-Input"
+                    className="col-sm-5 col-form-label"
+                  >
+                   Amount
+                  </Label>
+                  <Col sm={12}>
+                  <Input
+                    name='amount'
+                    type="text"
+                    className="form-control"
+                    id="horizontal-firstname-Input"
+                    placeholder="Enter Income Amount"
+                    value={formData.amount}
+                    onChange={handleChange}
+                    required
+                  />
+                  </Col>
+                </div>
+                
                 <div className="mb-4">
                   <Label
                     htmlFor="horizontal-firstname-Input"
                     className="col-sm-5 col-form-label"
                   >
-                    Revenue Description
+                    Description
                   </Label>
                   <Col sm={12}>
                   <textarea
-                    name='revenueDescription'
+                    name='description'
                     id="message"
                     className="form-control"
                     placeholder="Enter Your Message"
-                    value={formData.revenueDescription}
+                    value={formData.description}
                     onChange={handleChange}
                   ></textarea>
                   </Col>
