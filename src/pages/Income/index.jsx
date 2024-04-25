@@ -17,8 +17,8 @@ import AddIncome from "./Tablecontainer";
 import CardData from "./cardData";
 import { collection, getDocs } from "firebase/firestore";
 import { useStateContext } from "../../Context/ContextProvider";
-import TableContainer from "../Table/TableContainer";
-import Table from "../Table/TableContainer";
+import TableContainer from "../Table/IncomeTableContainer";
+import Table from "../Table/IncomeTableContainer";
 
 const Income = (props) => {
 

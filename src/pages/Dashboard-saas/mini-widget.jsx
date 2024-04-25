@@ -15,9 +15,9 @@ const MiniWidget = ({ reports }) => {
                     <i className={report.icon} />
                   </span>
                 </div>
-                <h5 className="font-size-14 mb-0">{report.title}</h5>
+                <h5 className="font-size-16 mb-0">{report.title}</h5>
               </div>
-              <div className="text-muted mt-4">
+              <div className="text-muted mt-3">
                 <h4>
                   {report.value}{" "}
                   <i className="mdi mdi-chevron-up ms-1 text-success" />

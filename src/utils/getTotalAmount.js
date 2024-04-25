@@ -1,7 +1,7 @@
 export const getTotalAmount=(data,key)=>{
 let total=0;
 data.map((data)=>{
-    total+=parseInt(data[key])
+    total+=parseInt(data[key].replace(/,/g, ''))
 })
 return total
 }

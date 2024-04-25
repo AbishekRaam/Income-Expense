@@ -24,6 +24,8 @@ import slack from "../../assets/images/brands/slack.png";
 
 import logo from "../../assets/images/logo.svg";
 import logoLightSvg from "../../assets/images/logo-light.svg";
+import Company_logo from "../../assets/images/Company_logo.jpeg";
+import Company_logo1 from "../../assets/images/Company_logo1.jpeg";
 
 //i18n
 import { withTranslation } from "react-i18next";
@@ -83,16 +85,16 @@ const Header = props => {
         <div className="navbar-header">
           <div className="d-flex">
 
-            <div className="navbar-brand-box d-lg-none d-md-block">
-              <Link to="/" className="logo logo-dark">
+            <div className="navbar-brand-box d-lg-none d-md-block px-2">
+              <Link to="/dashboard" className="logo logo-dark">
                 <span className="logo-sm">
-                  <img src={logo} alt="" height="22" />
+                  <img src={Company_logo} alt="" height="60" />
                 </span>
               </Link>
 
-              <Link to="/" className="logo logo-light">
+              <Link to="/dashboard" className="logo logo-light">
                 <span className="logo-sm">
-                  <img src={logoLightSvg} alt="" height="22" />
+                  <img src={Company_logo} alt="" height="60" />
                 </span>
               </Link>
             </div>
@@ -109,7 +111,7 @@ const Header = props => {
             </button>
           </div>
           <div className="d-flex">
-            <div className="dropdown d-inline-block d-lg-none ms-2">
+            {/* <div className="dropdown d-inline-block d-lg-none ms-2">
               <button
                 onClick={() => {
                   setsearch(!search);
@@ -146,8 +148,8 @@ const Header = props => {
                   </div>
                 </form>
               </div>
-            </div>
-            <NotificationDropdown />
+            </div> */}
+            {/* <NotificationDropdown /> */}
             <ProfileMenu />
           </div>
         </div>

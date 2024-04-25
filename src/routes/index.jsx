@@ -16,6 +16,8 @@ import Revenue from "../pages/Revenue/index";
 import Expenses from "../pages/Expenses/index";
 import Add from "../pages/Income/add";
 import Login2 from "../pages/Authentication/Login2";
+import IncomeList from "../pages/Revenue/incomeList";
+import ExpensesList from "../pages/Expenses/expenseList";
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
@@ -23,10 +25,10 @@ const authProtectedRoutes = [
   //   // //profile
   { path: "/profile", component: <UserProfile /> },
 
-  { path: "/revenue", component: <Revenue />},
-  { path: "/income", component: <Income />},
-  { path: "/expense", component: <Expenses />},
-  { path: "/add", component: <Add />},
+  { path: "/add-income", component: <Revenue />},
+  { path: "/income", component: <IncomeList />},
+  { path: "/add-expense", component: <Expenses />},
+  { path: "/expense", component: <ExpensesList />},
 
   //   // this route should be at the end of all other routes
   //   // eslint-disable-next-line react/display-name

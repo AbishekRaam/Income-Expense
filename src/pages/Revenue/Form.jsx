@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {
   Alert,
   Card,
@@ -13,9 +13,11 @@ import {
   InputGroup,
 } from "reactstrap";
 
-import { collection, addDoc, onSnapshot, Timestamp } from "firebase/firestore"; 
+import { collection, addDoc, Timestamp } from "firebase/firestore"; 
 import 'firebase/database';
-import {db} from "../../firebase-config.js"
+import {db} from "../../firebase-config.js";
+import { useNavigate } from 'react-router-dom';
+import { formatAmount } from "../../utils/utils"
 
 //Import Flatepicker
 import "flatpickr/dist/themes/material_blue.css";
@@ -24,53 +26,41 @@ import Flatpickr from "react-flatpickr";
 import InputMask from "react-input-mask"
 
 const FormRevenue = (props) => {
+  const nav = useNavigate();
 
-  const[formData, setFormData] = useState({
-    date: "",
-    amount: "",
-    type: "",
-    description: "",
-    clientName: "",
-  });
-  
-  const [show, setShow] = useState(false);
+  const [alertSuccess, setAlertSuccess] = useState('d-none');
+  const [alert, setAlert] = useState('d-none')
 
-  const handleChange = (e)=>{
-    const {name, value} = e.target;
-    setFormData({...formData, [name]: value,timestamp:Timestamp.now()});
-  }
+  const [type, setType] = useState('')
+  const [date, setDate] = useState('')
+  const [amount, setAmount] = useState("")
+  const [description, setDescription] = useState('');
+  const [clientName, setClientName] = useState("")
 
-  const handleSubmit = async(e)=>{
-    e.preventDefault(); 
-
-    try {
-      const docRef = await addDoc(collection(db, "Income"),formData);
-      // console.log("Document written with ID: ", docRef.id);
-      setFormData({
-        date: "",
-        amount: "",
-        type: "",
-        description: "",
-        clientName: "",
-      })
-    } catch (e) {
-      console.error("Error adding document: ", e);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!type || !date || !amount || !description) {
+      setAlert('d-block');
+      setTimeout(() => setAlert('d-none'), 2000);
+      return;
     }
-    console.log(formData)
+
+    await addDoc(collection(db, 'Income'), { type, date, amount, clientName, description,timestamp:Timestamp.now() }).then(() => {
+      setAlertSuccess('d-block')
+      setTimeout(() => setAlertSuccess('d-none'), 2000);   
+    }).catch(err => console.log(err));
+    setAmount("");
+    setDate("");
+    setType("");
+    setClientName("");
+    setDescription("");
   }
 
   return (
       <Row className='d-flex justify-content-center'>
-        <Col lg={9}>
-          <div id="liveAlertPlaceholder">
-            <Alert isOpen={show} toggle={() => {
-              setShow(false)
-            }}>
-              Your Income Details Added
-            </Alert>
-          </div>
-        </Col>  
         <Col lg={8} >
+        <Alert color="danger" className={alert}>Please fill in all fields!</Alert>
+        <Alert color="success" className={alertSuccess}>Income added successfully!</Alert>
           <Card>
             <CardBody>
               <CardTitle className="mb-4">Income Form</CardTitle>
@@ -89,9 +79,8 @@ const FormRevenue = (props) => {
                       className='form-control'
                       type="date"
                       name="date"
-                      value={formData.date}
-                      onChange={handleChange}
-                      required
+                      value={date}
+                      onChange={(e) => setDate(e.target.value)}
                     />
                   </InputGroup>
                   </Col>
@@ -107,18 +96,19 @@ const FormRevenue = (props) => {
                     <select
                       className="select2-selection form-control"
                       name="type"
-                      value={formData.type}
-                      onChange={handleChange}
-                      required
+                      value={type}
+                      onChange={(e) => setType(e.target.value)}
                     >
                       <option>Select Income Category</option>
                       <option value="Revenue">Revenue</option>
-                      <option value="Debt or Loan">Debt / Loan</option>
+                      <option value="Debt">Debt</option>
+                      <option value="Loan">Loan</option>
+                      <option value="Cash">Cash</option>
                     </select>
                   </Col>
                 </div>
                 
-                {formData.type === 'Revenue' && (
+                {type === 'Revenue' && (
                   <div className="mb-4">
                   <Label
                     htmlFor="horizontal-firstname-Input"
@@ -133,22 +123,19 @@ const FormRevenue = (props) => {
                       className="form-control"
                       id="horizontal-firstname-Input"
                       placeholder="Enter Client"
-                      value={formData.clientName}
-                      onChange={handleChange}
-                      required
+                      value={clientName}
+                      onChange={(e) => setClientName(e.target.value)}
                     />
                   </Col>
                 </div>
                 )}
-
-                
-                
+               
                 <div className="mb-4">
                   <Label
                     htmlFor="horizontal-email-Input"
                     className="col-sm-5 col-form-label"
                   >
-                   Amount
+                   Amount (INR)
                   </Label>
                   <Col sm={12}>
                   <Input
@@ -157,9 +144,8 @@ const FormRevenue = (props) => {
                     className="form-control"
                     id="horizontal-firstname-Input"
                     placeholder="Enter Income Amount"
-                    value={formData.amount}
-                    onChange={handleChange}
-                    required
+                    value={amount}
+                    onChange={(e) => setAmount(formatAmount(e.target.value))}
                   />
                   </Col>
                 </div>
@@ -172,31 +158,38 @@ const FormRevenue = (props) => {
                     Description
                   </Label>
                   <Col sm={12}>
-                  <textarea
+                  <input
                     name='description'
                     id="message"
                     className="form-control"
                     placeholder="Enter Your Message"
-                    value={formData.description}
-                    onChange={handleChange}
-                  ></textarea>
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                  />
                   </Col>
                 </div>
                 
-              <div className="justify-content-end">
                 <Col sm={12}>
-                  <div className=''>
+                  <div className='d-flex justify-content-end'>
                     <Button
                       type="submit"
                       color="primary"
                       className="w-md mx-2 my-2"
-                      onClick={() => setShow(true)} id="liveAlertBtn"
+                      onClick={handleSubmit} id="liveAlertBtn"
                     >
                       Save
                     </Button>
+
+                    <Button
+                      type="button"
+                      color="success"
+                      className="w-md mx-2 my-2"
+                      onClick={()=> nav('/income')}
+                    >
+                      Back
+                    </Button>
                   </div>
                 </Col>
-              </div>
               </Form>
             </CardBody>
           </Card>

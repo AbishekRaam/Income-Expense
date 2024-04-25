@@ -202,7 +202,7 @@ const TableContainer = ({
         <Table {...getTableProps()} className={tableClass}>
           <thead className={theadClass}>
             {headerGroups.map((headerGroup) => (
-              <tr key={headerGroup.id} {...headerGroup.getHeaderGroupProps()}>
+              <tr className="table-light" key={headerGroup.id} {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
                   <th key={column.id} className={column.isSort ? "sorting" : ''}>
                     <div {...column.getSortByToggleProps()}>
@@ -221,7 +221,7 @@ const TableContainer = ({
               prepareRow(row);
               return (
                 <Fragment key={row.getRowProps().key}>
-                  <tr>
+                  <tr className="border-1">
                     {row.cells.map((cell) => {
                       return (
                         <td key={cell.id} {...cell.getCellProps()}>

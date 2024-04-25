@@ -16,15 +16,17 @@ import { withTranslation } from "react-i18next";
 import Layout from './Layout';
 
 const Expenses = (props) => {
-  
+  //meta title
+  document.title =
+  "Expenses ";
   return (
     <React.Fragment>
         <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumb */}
           <Breadcrumbs
-            title={props.t("Expeses")}
-            breadcrumbItem={props.t("Expenses")}
+            title={props.t("Expenses")}
+            breadcrumbItem={props.t("Expenses Form")}
           />
         </Container>
 

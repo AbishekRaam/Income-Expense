@@ -1,19 +1,51 @@
-import React from "react";
-import { Row, Col, Card, CardBody } from "reactstrap";
+import React, { useState } from "react";
+import { Row, Col, Card, CardBody, Dropdown, DropdownMenu, DropdownItem, DropdownToggle } from "reactstrap";
 import ReactApexChart from "react-apexcharts";
 import getChartColorsArray from "../../components/Common/ChartsDynamicColor";
 import { useStateContext } from "../../Context/ContextProvider";
-import { getRevenue, getTotalAmount } from "../../utils/getTotalAmount";
+import { getTotalAmount,getRevenue } from "../../utils/getTotalAmount";
+import { getToatalRevenue  } from "../../utils/utils";
+
+const years = [2023, 2024, 2025, 2026,];
 
 const SalesAnalytics = ({ dataColors }) => {
+  const [singlebtn1, setSinglebtn1] = useState(false);
+  
+  const yearVal = new Date().getFullYear();
+
+  const [selectedYear, setSelectedYear] = useState(yearVal);
+  const handleYear = (event) => {
+    setSelectedYear(event.target.value);
+  };
+
   const {income,expense} = useStateContext()
   const apexsaleschartColors = getChartColorsArray(dataColors);
-  const incomeAmount = getTotalAmount(income,'income')
+
+  const incomeAmount = getTotalAmount(income,'amount')
   const expenseAmount = getTotalAmount(expense,'amount')
-  const revenueAmount = getRevenue(income)
-  const series = [incomeAmount, revenueAmount, expenseAmount];
+  const revenueAmount = getRevenue(income);
+
+  //get year value of income and expense
+  function calculate(values){
+    const yearValue = selectedYear;
+    let total=0;
+    const filterVal = values.filter((data)=>{
+        const date = new Date(data.date);
+        const monthIndex = date.getFullYear() == yearValue;
+        return monthIndex   
+    })
+    filterVal.map(val =>{
+        total+=parseInt(val.amount.replace(/,/g, ''));
+    })
+    return total
+  }
+  const yearlyIncome = calculate(income);
+  const yearlyExpense = calculate(expense);
+
+  const series = [yearlyIncome, yearlyExpense];
+  //const series = [incomeAmount, expenseAmount];
   const options = {
-    labels: ["Income", "Revenue", "Expenses"],
+    labels: ["Income", "Expenses"],
     colors: apexsaleschartColors,
     legend: { show: !1 },
     plotOptions: {
@@ -27,35 +59,31 @@ const SalesAnalytics = ({ dataColors }) => {
 
   return (
     <React.Fragment>
-      <Col xl="6">
+      <Col xl="5">
         <Card>
-          <CardBody>
-            <div className="float-end mx-2">
-              <div className="input-group input-group-sm">
-                <select className="form-control select2-selection">
-                  <option value="January">January</option>
-                  <option value="February">February</option>
-                  <option value="March">March</option>
-                  <option value="April">April</option>
-                  <option value="May">May</option>
-                  <option value="June">June</option>
-                  <option value="July">July</option>
-                  <option value="July">August</option>
-                  <option value="September">September</option>
-                  <option value="October">October</option>
-                  <option value="November">November</option>
-                  <option value="December">December</option>
-                </select>
+          <CardBody>            
+            <div className="clearfix">
+              <div className="float-end">
+                <div className="input-group input-group-sm">
+                  <Dropdown
+                    isOpen={singlebtn1}
+                    toggle={() => setSinglebtn1(!singlebtn1)}
+                  >
+                    <DropdownToggle tag="button" className="btn btn-primary" caret>
+                      {selectedYear}
+                      <i className="mdi mdi-chevron-down" />
+                    </DropdownToggle>
+                    <DropdownMenu>
+                      {years.map((year, index)=>(
+                        <DropdownItem key={index} onClick={() => setSelectedYear(year)}>{year}</DropdownItem>
+                      ))}
+                    </DropdownMenu>
+                  </Dropdown>
+                </div>
               </div>
+              <h4 className="card-title mb-4">Total Analytics</h4>
             </div>
-            <div className="float-end">
-              <div className="input-group input-group-sm">
-                <select className="select2-selection form-control">
-                  <option value="Year">2024</option>
-                </select>
-              </div>
-            </div>
-            <h4 className="card-title mb-4">Total Analytics</h4>
+
             <div>
               <div id="donut-chart">
                 <ReactApexChart
@@ -67,33 +95,22 @@ const SalesAnalytics = ({ dataColors }) => {
                 />
               </div>
             </div>
-            <div className="text-center text-muted">
-              <Row>
+            <div className="text-center text-muted my-4">
+              <Row className="d-flex justify-content-around">
                 <Col xs="4">
                   <div className="mt-4">
                     <p className="mb-2 text-truncate">
-                      <i className="mdi mdi-circle text-primary me-1" /> Income
-                      
+                      <i className="mdi mdi-circle text-primary me-1" /> Income                     
                     </p>
-                    <h5>$ {incomeAmount.toLocaleString()}</h5>
+                    <h5>$ {yearlyIncome.toLocaleString('en-IN')}</h5>
                   </div>
                 </Col>
                 <Col xs="4">
                   <div className="mt-4">
                     <p className="mb-2 text-truncate">
-                      <i className="mdi mdi-circle text-success me-1" /> Revenue
-                      
+                      <i className="mdi mdi-circle text-success me-1" /> Expenses
                     </p>
-                    <h5>$ {revenueAmount.toLocaleString()}</h5>
-                  </div>
-                </Col>
-                <Col xs="4">
-                  <div className="mt-4">
-                    <p className="mb-2 text-truncate">
-                      <i className="mdi mdi-circle text-danger me-1" /> Expenses
-                      C
-                    </p>
-                    <h5>$ {expenseAmount.toLocaleString()}</h5>
+                    <h5>$ {yearlyExpense.toLocaleString('en-IN')}</h5>
                   </div>
                 </Col>
               </Row>

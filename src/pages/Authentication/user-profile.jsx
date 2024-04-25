@@ -37,7 +37,7 @@ import ProfileLayout from "./ProfileLayout";
 const UserProfile = (props) => {
 
   //meta title
-  document.title = "Profile | Skote - React Admin & Dashboard Template";
+  document.title = "Profile | SST-Income and Expenses";
 
   const {url} = useStateContext()
   const dispatch = useDispatch();
@@ -101,6 +101,9 @@ const UserProfile = (props) => {
     <React.Fragment>
       <div className="page-content">
         <Container fluid>
+          {/* Render Breadcrumb */}
+          <Breadcrumb title="Profile" breadcrumbItem="Profile" />
+
           <Row>
             <Col lg="12">
               {error && error ? <Alert color="danger">{error}</Alert> : null}
@@ -125,10 +128,10 @@ const UserProfile = (props) => {
             </Col>
           </Row>
           <Row>
-          <Col sm="7">
+          <Col sm="9">
           <ProfileLayout/>
           </Col>
-          <Col sm="5">
+          {/* <Col sm="5">
           <h4 className="card-title mb-4">Change User Name</h4>
           <Card>
             <CardBody>
@@ -136,7 +139,7 @@ const UserProfile = (props) => {
                 className="form-horizontal"
                 onSubmit={(e) => {
                   e.preventDefault();
-                  // validation.handleSubmit();
+                  //validation.handleSubmit();
                   return false;
                 }}
               >
@@ -168,7 +171,7 @@ const UserProfile = (props) => {
               </Form>
             </CardBody>
           </Card>
-          </Col>
+          </Col> */}
           </Row>
         </Container>
       </div>

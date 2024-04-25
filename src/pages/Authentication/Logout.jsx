@@ -9,11 +9,11 @@ import { useNavigate } from "react-router-dom";
 
 const Logout = () => {
   const history = useNavigate();
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(logoutUser(history));
-  }, [dispatch, history]);
+  // useEffect(() => {
+  //   dispatch(logoutUser(history));
+  // }, [dispatch, history]);
 
   return <></>;
 };

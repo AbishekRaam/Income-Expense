@@ -32,11 +32,15 @@ import profile from "../../assets/images/profile-img.png";
 import logo from "../../assets/images/logo.svg";
 import {auth} from "../../firebase-config"
 import {signInWithEmailAndPassword,sendPasswordResetEmail} from 'firebase/auth'
+import Company_logo from "../../assets/images/Comp_logo.jpg"
 const initialValues = {
   email:"",
   password:""
 }
 const Login2 = () => {
+  //meta title
+  document.title = "Login | SST-Income and Expenses";
+
   const signupValidation = Yup.object({
     email: Yup.string().min(3).email("Please Enter Valid Email").required("Please Enter Your username"),
     password: Yup.string().min(3).required("Please Enter Your Password"),
@@ -93,22 +97,22 @@ const Login2 = () => {
                       <div className="avatar-md profile-user-wid mb-4">
                         <span className="avatar-title rounded-circle bg-light">
                           <img
-                            src={logo}
+                            src={Company_logo}
                             alt=""
                             className="rounded-circle"
-                            height="34"
+                            height="40"
                           />
                         </span>
                       </div>
                     </Link>
                     <Link to="/" className="auth-logo-dark">
-                      <div className="avatar-md profile-user-wid mb-4">
-                        <span className="avatar-title rounded-circle bg-light">
+                      <div className="avatar-md profile-user-wid mb-4 ">
+                        <span className="avatar-title rounded-circle bg-light bg-white">
                           <img
-                            src={logo}
+                            src={Company_logo}
                             alt=""
                             className=""
-                            height="34"
+                            height="50"
                           />
                         </span>
                       </div>

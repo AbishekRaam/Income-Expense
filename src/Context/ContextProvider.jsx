@@ -35,7 +35,7 @@ await getDownloadURL(fileRef).then((url) => {
 handleGet()
   },[sessionStorage.getItem('uid')])
 useEffect(()=>{
-    const getData=async()=>{
+    const getData=()=>{
     onSnapshot(
       collection(db,'Income') ,(data)=>{
         setIncome(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
@@ -43,11 +43,23 @@ useEffect(()=>{
       console.log(error)
     })
     
-    const data1 = await getDocs(collection(db,'Expense')).catch(err=>console.log(err))
-    setExpense(data1.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+    // const data1 = await getDocs(collection(db,'Expense')).catch(err=>console.log(err))
+    // setExpense(data1.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
     }
     getData()
   },[])
+useEffect(()=>{
+  const getData1 = () =>{
+    onSnapshot(
+      collection(db,'Expense') ,(data)=>{
+        setExpense(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+    },(error)=>{
+      console.log(error)
+    })
+  }
+  getData1();
+},[])
+
   return (<StateContext.Provider value={{income,setIncome,expense,setExpense,url}}>
     {children}
 </StateContext.Provider>)

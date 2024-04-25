@@ -144,40 +144,40 @@ const SidebarContent = (props) => {
       <SimpleBar className="h-100" ref={ref}>
         <div id="sidebar-menu">
         <ul className="metismenu list-unstyled" id="side-menu">
-            <li className="menu-title">{props.t("Menu")} </li>
+            {/* <li className="menu-title">{props.t("Menu")} </li> */}
             <li>
               <Link to="/dashboard" className="">
                 <i className="bx bx-home-circle"></i>
                 <span>{("Dashboard")}</span>
               </Link>
             </li>
-            <li className="menu-title">Apps</li>
+            {/* <li className="menu-title">Apps</li> */}
             {/* <li>
-              <Link to="/income" className=" ">
+              <Link to="/sample" className=" ">
                 <i className="mdi mdi-cash-multiple"></i>
-                <span>{props.t("Income")}</span>
+                <span>{props.t("sample Income")}</span>
               </Link>
             </li> */}
 
             <li>
-              <Link to="/revenue" className=" ">
+              <Link to="/income" className="">
                 <i className="bx bx-dollar-circle"></i>
                 <span>{props.t("Income")}</span>
               </Link>
             </li>            
 
             <li>
-              <Link to="/expense" className="">
+              <Link to="/expense" className=" ">
                 <i className="bx bx-money"></i>
                 <span>{props.t("Expenses")}</span>
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link to="/profile" className="">
                 <i className="bx bx-user"></i>
                 <span>{props.t("Profile")}</span>
               </Link>
-            </li>
+            </li> */}
           </ul>
         </div>
       </SimpleBar>

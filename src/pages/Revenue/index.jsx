@@ -12,6 +12,9 @@ import { withTranslation } from "react-i18next";
 import FormRevenue from "./Form";
 
 const Revenue = (props) => {
+  //meta title
+  document.title =
+  "Income ";
   return (
     <React.Fragment>
       <div className="page-content">
@@ -19,7 +22,7 @@ const Revenue = (props) => {
           {/* Render Breadcrumb */}
           <Breadcrumbs
             title={props.t("Income")}
-            breadcrumbItem={props.t("Income")}
+            breadcrumbItem={props.t("Income Form")}
           />
         </Container>
 

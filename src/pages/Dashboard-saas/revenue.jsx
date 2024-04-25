@@ -4,7 +4,7 @@ import ReactApexChart from "react-apexcharts";
 import getChartColorsArray from "../../components/Common/ChartsDynamicColor";
 import { Link } from 'react-router-dom';
 import { useStateContext } from "../../Context/ContextProvider";
-import { getToatalRevenue, revenueChat } from "../../utils/utils.js"
+import { getToatalRevenue } from "../../utils/utils.js"
 
 const Revenue = ({dataColors}) => {
   const {income} = useStateContext();

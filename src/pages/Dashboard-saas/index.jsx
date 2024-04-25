@@ -13,46 +13,47 @@ import SalesAnalytics from "./sales-analytics";
 import Revenue from "./revenue";
 import TotalSellingProduct from "./total-selling-product";
 import { useStateContext } from "../../Context/ContextProvider";
-import { getTotalAmount, getToatalRevenue, getTotalExpenses } from "../../utils/utils.js"
+import { getTotalAmount, getToatalRevenue } from "../../utils/utils.js"
 import IncomeChart from "./IncomeChart";
+import IncomeAndExpense from "./incomeAndExpense.jsx";
+import { getRevenue } from "../../utils/getTotalAmount.js";
 // import Tasks from "./tasks";
 // import ChatBox from "./chat-box";
 
 const DashboardSaas = (props) => {
 
   const {income, expense} = useStateContext();
-  console.log(income)
 
   const reports = [
     {
-      icon: "bx bx-copy-alt",
+      icon: "bx bx-archive-in ",
       title: "Income",
       value: `$ ${getTotalAmount(income)}`,
-      badgeValue: "+ 0.2%",
-      color: "success",
-      desc: "From previous period",
+      // badgeValue: "+ 0.2%",
+      // color: "success",
+      // desc: "From previous period",
     },
     {
-      icon: "bx bx-archive-in",
+      icon: "bx bx-dollar-circle",
       title: "Revenue",
-      value: `$ `,
-      badgeValue: "+ 0.2%",
-      color: "success",
-      desc: "From previous period",
+      value: `$ ${getToatalRevenue(income)}`,
+      // badgeValue: "+ 0.2%",
+      // color: "success",
+      // desc: "From previous period",
     },
     {
       icon: "bx bx-archive-out",
       title: "Expenses",
-      value: `$ ${getTotalExpenses(expense)}`,
-      badgeValue: "0%",
-      color: "warning",
-      desc: "From previous period",
+      value: `$ ${getTotalAmount(expense)}`,
+      // badgeValue: "0%",
+      // color: "warning",
+      // desc: "From previous period",
     },
   ];
 
   //meta title
   document.title =
-    "Saas Dashboard | Skote - Vite React Admin & Dashboard Template";
+    "Dashboard | SST-Income and Expenses";
 
   return (
     <React.Fragment>
@@ -66,9 +67,9 @@ const DashboardSaas = (props) => {
 
           <Row>
             {/* welcome card */}
-            <CardWelcome />
+            {/* <CardWelcome /> */}
 
-            <Col xl="8">
+            <Col xl="12">
               <Row>
                 {/*mimi widgets */}
                 <MiniWidget reports={reports} />
@@ -84,8 +85,9 @@ const DashboardSaas = (props) => {
             <SalesAnalytics dataColors='["--bs-primary", "--bs-success", "--bs-danger"]' />
           </Row>
 
+          {/* Income / Expenses Analytics */}
           <Row >
-            <Revenue dataColors='["--bs-success"]'/>
+            <IncomeAndExpense dataColors='["--bs-success", "--bs-danger","--bs-primary"]'/>
           </Row>
 
           {/* <Row>

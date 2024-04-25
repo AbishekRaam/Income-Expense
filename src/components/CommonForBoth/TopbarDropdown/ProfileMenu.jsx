@@ -19,11 +19,20 @@ import { useStateContext } from "../../../Context/ContextProvider";
 import user1 from "../../../assets/images/users/avatar-1.jpg";
 import Cookies from "js-cookie";
 
+import { initializeApp } from "firebase/app";
+import { getAuth, signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../../../firebase-config";
+
 const ProfileMenu = (props) => {
+
+  const nav = useNavigate();
+
   // Declare a new state variable, which we'll call "menu"
   const [menu, setMenu] = useState(false);
   const {url} = useStateContext()
   const [username, setusername] = useState(Cookies.get('name'));
+  //const [username, setusername] = useState("Admin");
 
   useEffect(() => {
     if (localStorage.getItem("authUser")) {
@@ -39,6 +48,15 @@ const ProfileMenu = (props) => {
       }
     }
   }, [props.success]);
+  
+  const handleSignOut = () =>{
+    signOut(auth).then(() => {
+      sessionStorage.removeItem("uid");      
+      nav("/login");
+    }).catch((error) => {
+      console.error("Error logging out:", error);
+    });
+  }
 
   return (
     <React.Fragment>
@@ -48,7 +66,7 @@ const ProfileMenu = (props) => {
         className="d-inline-block"
       >
         <DropdownToggle
-          className="btn header-item "
+          className="btn header-item px-3"
           id="page-header-user-dropdown"
           tag="button"
         >{
@@ -58,8 +76,8 @@ const ProfileMenu = (props) => {
             alt="Header Avatar"
           />):(username && <><div className='d-flex justify-content-center align-items-center bg-primary text-light rounded-circle header-profile-user' >{Cookies.get('name').split('')[0]}</div></>)
         }
-          <span className="d-none d-xl-inline-block ms-2 me-1">{username}</span>
-          <i className="mdi mdi-chevron-down d-none d-xl-inline-block" />
+          {/* <span className="d-none d-xl-inline-block ms-2 me-1">{username}</span>
+          <i className="mdi mdi-chevron-down d-none d-xl-inline-block" /> */}
         </DropdownToggle>
         <DropdownMenu className="dropdown-menu-end">
           <DropdownItem tag="a" href="/profile">
@@ -70,7 +88,7 @@ const ProfileMenu = (props) => {
           <div className="dropdown-divider" />
           <Link to="/logout" className="dropdown-item">
             <i className="bx bx-power-off font-size-16 align-middle me-1 text-danger" />
-            <span>{props.t("Logout")}</span>
+            <span onClick={()=>handleSignOut()}>{props.t("Logout")}</span>
           </Link>
         </DropdownMenu>
       </Dropdown>
